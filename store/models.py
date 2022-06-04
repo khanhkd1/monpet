@@ -12,11 +12,11 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, null=False)
     price = models.IntegerField()
     avaiable = models.BooleanField(default=True)
-    describe = models.TextField()
+    description = models.TextField()
 
     def __str__(self):
         return self.title
@@ -26,7 +26,7 @@ class Product(models.Model):
 
 
 class Image(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image_url = models.CharField(max_length=255, null=False)
 
     def __str__(self):

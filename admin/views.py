@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import FormView, TemplateView, View
+from django.views.generic import FormView, TemplateView, View, CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
-from .forms import LoginForm
+from .forms import LoginForm, ProductForm
 
 class AdminLoginView(FormView):
     template_name = "admin/login.html"
     form_class = LoginForm
-    success_url = reverse_lazy("admin:home")
+    success_url = reverse_lazy("store:home")
 
     def form_valid(self, form):
         uname = form.cleaned_data.get("username")
@@ -38,11 +38,16 @@ class AdminRequiredMixin(object):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AdminHomeView(AdminRequiredMixin, TemplateView):
-    template_name = "admin/home.html"
+class AdminProductCreateView(AdminRequiredMixin, CreateView):
+    template_name = "admin/productcreate.html"
+    form_class = ProductForm
+    success_url = reverse_lazy("admin:home")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context["pendingorders"] = Order.objects.filter(
-        #     order_status="Order Received").order_by("-id")
-        return context
+    def form_valid(self, form):
+        # p = form.save()
+        images = self.request.FILES.getlist("more_images")
+        for i in images:
+            print(f'{i}\n{type(i)}')
+            # ProductImage.objects.create(product=p, image=i)
+        return HttpResponse('ok')
+        # return super().form_valid(form)

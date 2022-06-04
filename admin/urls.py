@@ -6,5 +6,5 @@ app_name = "admin"
 urlpatterns = [
     path("login/", views.AdminLoginView.as_view(), name="login"),
     path("logout/", views.AdminLogoutView.as_view(), name="logout"),
-    path("", views.AdminHomeView.as_view(), name="home"),
+    path("product/add/", views.AdminProductCreateView.as_view(), name="productcreate")
 ]

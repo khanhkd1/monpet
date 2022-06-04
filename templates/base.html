@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,8 +7,8 @@
 
         {% comment %} Bootstrap 5 {% endcomment %}
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'store/css/bootstrap.css' %}">
-        <script src="{% static 'store/js/bootstrap.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+        <script src="{% static 'js/bootstrap.js' %}"></script>
     </head>
     <body>
         <div class="container">
@@ -21,8 +19,11 @@
                     <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'store:adminlogout' %}" class="nav-link">Logout {{ user.username }}</a></li>
+                    {% endif %}
                 </ul>
-                </header>
+            </header>
         </div>
         <div class="container">
             {% block content %}

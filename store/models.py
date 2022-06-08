@@ -12,7 +12,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, null=False)
     price = models.IntegerField()
     avaiable = models.BooleanField(default=True)
@@ -26,7 +26,7 @@ class Product(models.Model):
 
 
 class Image(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     image_url = models.CharField(max_length=255, null=False)
 
     def __str__(self):
